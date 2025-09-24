@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DTC Bus Scheduling Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f6f8;
+        }
+        header {
+            background-color: #0078d4;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            gap: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            flex: 1 1 300px;
+            min-width: 300px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        .bus-arrival {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .bus-arrival li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        .map {
+            height: 300px;
+            background-color: #e2e2e2;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 1.2em;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+        }
+        .status.in-transit {
+            background-color: #0078d4;
+        }
+        .status.delayed {
+            background-color: #d9534f;
+        }
+        @media (max-width: 800px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DTC Bus Scheduling Dashboard</h1>
+    </header>
+    <div class="container">
+        <!-- Passenger Section -->
+        <div class="card">
+            <h2>Upcoming Bus Arrivals</h2>
+            <ul class="bus-arrival" id="busArrival">
+                <li>Bus 501: Arrival in 5 mins</li>
+                <li>Bus 312: Arrival in 12 mins</li>
+                <li>Bus 68: Arrival in 20 mins</li>
+                <li>Bus 110: Arrival in 25 mins</li>
+            </ul>
+        </div>
+        <!-- Admin Section -->
+        <div class="card">
+            <h2>Bus Location Tracking</h2>
+            <div class="map" id="map">Map View Coming Soon</div>
+            <p><strong>Bus Status:</strong></p>
+            <table>
+                <thead>
+                    <tr><th>Bus Number</th><th>Status</th><th>Current Location</th></tr>
+                </thead>
+                <tbody id="busStatusTable">
+                    <tr><td>501</td><td><span class="status in-transit">In Transit</span></td><td>Sector 10</td></tr>
+                    <tr><td>312</td><td><span class="status delayed">Delayed</span></td><td>Near AIIMS</td></tr>
+                    <tr><td>68</td><td><span class="status in-transit">In Transit</span></td><td>Connaught Place</td></tr>
+                    <tr><td>110</td><td><span class="status in-transit">In Transit</span></td><td>Dwarka Sector 6</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Route Optimization Section -->
+        <div class="card">
+            <h2>Optimized Bus Routes</h2>
+            <p>Routes have been optimized to minimize delays and reduce overlap.</p>
+            <table>
+                <thead>
+                    <tr><th>Route</th><th>Number of Buses</th><th>Estimated Travel Time</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Route 1: Red Line</td><td>5</td><td>45 mins</td></tr>
+                    <tr><td>Route 2: Blue Line</td><td>3</td><td>35 mins</td></tr>
+                    <tr><td>Route 3: Green Line</td><td>4</td><td>50 mins</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Bus Timetable Section -->
+        <div class="card">
+            <h2>Bus Timetable</h2>
+            <table>
+                <thead>
+                    <tr><th>Bus Number</th><th>Route</th><th>Departure Time</th><th>Arrival Time</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>501</td><td>Red Line</td><td>08:00 AM</td><td>08:45 AM</td></tr>
+                    <tr><td>312</td><td>Blue Line</td><td>08:05 AM</td><td>08:40 AM</td></tr>
+                    <tr><td>68</td><td>Green Line</td><td>08:10 AM</td><td>09:00 AM</td></tr>
+                    <tr><td>110</td><td>Red Line</td><td>08:15 AM</td><td>09:00 AM</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<script>
+    // Example of updating bus arrival times dynamically (mock functionality)
+    function updateBusArrivalTimes() {
+        const arrivals = [5,12,20,25];
+        const busArrivalList = document.getElementById('busArrival');
+        for(let i=0; i<busArrivalList.children.length; i++) {
+            arrivals[i] = arrivals[i] > 0 ? arrivals[i] - 1 : 25; // cycle times
+            busArrivalList.children[i].textContent = `Bus ${busArrivalList.children[i].textContent.split(' ')[1].slice(0,-1)}: Arrival in ${arrivals[i]} mins`;
+        }
+    }
+    setInterval(updateBusArrivalTimes, 60000);
+</script>
+</body>
+</html>
